@@ -13,5 +13,8 @@ export default props =>
             <Link to="/register">
                 <i class="fa fa-money-bill-1">Cadastra Aluno</i>
             </Link>
+            <Link to="/allregister">
+                <i class="fa fa-money-bill-1">Consulta Todos os Aluno</i>
+            </Link>
         </nav>
     </aside>

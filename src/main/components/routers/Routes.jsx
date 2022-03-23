@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "../../home/Home";
 import Query from "../../query/Query";
 import Register from "../../register/Register";
+import AllRegister from "../../register/AllRegister";
 
 
 export default props =>
@@ -11,5 +12,6 @@ export default props =>
         <Route exact path="/" element={<Home />} />
         <Route path="/query" element={<Register />} />
         <Route path="/register" element={<Query />} />
+        <Route path="/allregister" element={<AllRegister />} />
         <Route path="*" element={<Home />} />
     </Routes>
