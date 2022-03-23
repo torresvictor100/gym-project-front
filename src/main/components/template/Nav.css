@@ -3,6 +3,7 @@ aside.menu-area{
     box-shadow: 
     2px 0 10px 0 rgba(0,0,0,0.15),
     2px 0 15px 0 rgba(0,0,0,0.09);
+    color: white;
 }
 
 .menu a {
@@ -24,6 +25,7 @@ aside.menu-area{
         align-items: center;
     }
     .menu a{
+        color: white;
         display: inline;
         padding: 10px;
         margin: 0px;
