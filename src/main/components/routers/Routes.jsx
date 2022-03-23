@@ -10,8 +10,8 @@ import AllRegister from "../../register/AllRegister";
 export default props =>
     <Routes>
         <Route exact path="/" element={<Home />} />
-        <Route path="/query" element={<Register />} />
-        <Route path="/register" element={<Query />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/query" element={<Query />} />
         <Route path="/allregister" element={<AllRegister />} />
         <Route path="*" element={<Home />} />
     </Routes>
