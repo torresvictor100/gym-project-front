@@ -63,7 +63,7 @@ export default class Query extends Component {
                     <div className="col-12 d-flex justify-content-end">
                     <button className="btn btn-success"
                             onClick={e => this.getClient(e)}>
-                            <i className="fa fa-pen"></i>
+                            <i className="fa fa-pen">Buscar</i>
                         </button>
                     </div>
                 </div>
