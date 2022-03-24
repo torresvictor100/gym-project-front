@@ -39,31 +39,6 @@ export default class Register extends Component {
             })
     }
 
-    renderTela(){
-        return( <div className="form">
-                <div className="row">
-                    <div className="col-12 col-md-6">
-                        <div className="form-grup">
-                            <label>ID</label>
-                            <input type="value" className="form-control" name="id"
-                                value={this.state.client.id} onChange={e => this.updateField(e)}
-                                placeholder="Digite o id" />
-                        </div>
-                        <div></div>
-                    </div>
-                </div>
-                <hr />
-                <div className="row">
-                    <div className="col-12 d-flex justify-content-end">
-                    <button className="btn btn-success"
-                            onClick={e => this.getClient(e)}>
-                            <i className="fa fa-pen">Buscar</i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            )
-    }
 
     renderUsuario(){
         return(
@@ -110,12 +85,12 @@ export default class Register extends Component {
                 <div className="row">
                     <div className="col-12 d-flex justify-content-end">
                     <button className="btn btn-success"
-                            onClick={e => this.getClient(this.state.client.id)}>
+                            onClick={e => this.getClient(this.state.client.id)}>{/** acho que se coloca só um e resolver testa */}
                             <i className="fa fa-pen">Buscar</i>
                         </button>
 
                         <button className="btn btn-danger"
-                            onClick={e => this.remove(this.stateConsultado.client.id)}>
+                            onClick={e => this.remove(this.state.client.id)}>
                             <i className="fa fa-pen">Deleta</i>
                         </button>
                     </div>
@@ -144,17 +119,21 @@ export default class Register extends Component {
             })
     }
 
-    remove(client) {
+    remove(event) {
+        const client = { ...this.stateConsultado.client }
+        console.log(client.id)
         axios.delete(`${baseUrl}/${client.id}`).then(resp => {
             this.clear()
         })
     }
 
-    pay() {//ver se ta certo
-        const client = this.state.client
+    pay(event) {//ver se ta certo
+        
+        const client = { ...this.stateConsultado.client }
+        console.log(client.id)
         const method = client.id ? 'put' : 'post'
-        const url = client.id ? `${baseUrl}/${client.id}` : baseUrl
-        axios[method](url, client)
+        const url = client.id ? `${baseUrl}/paymentmonth` : `${baseUrl}/paymentmonth`
+        axios[method](url, { "id": client.id})
             .then(resp => {
                 this.setState({ client: initialState.client })
             })
