@@ -34,7 +34,7 @@ export default class AllRegister extends Component {
                         <th>Nome</th>
                         <th>Numero</th>
                         <th>Data de Pagamento</th>
-                        <th>Ultimo mês pago</th>
+                        <th>Mês de vencimento</th>
                         <th>situação de pagamento</th>
                     </tr>
                     </thead>
@@ -56,7 +56,7 @@ export default class AllRegister extends Component {
                     <td>{client.name}</td>
                     <td>{client.numero}</td>
                     <td>{client.datePagament}</td>
-                    <td>{client.lastMouthPaid +1}</td>
+                    <td>{(client.lastMouthPaid+1)}</td>
                     <td>{client.pay? "pagamento em dia":"atrasado"}</td>
                 </tr>
             )

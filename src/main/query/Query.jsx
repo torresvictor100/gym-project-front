@@ -44,6 +44,22 @@ export default class Query extends Component {
         this.setState({ client })
     }
 
+    pagou(){
+        return(
+            <div className="pagou">
+                    pagamento em dia
+            </div>
+        )
+    } 
+
+    naopagou(){
+        return(
+            <div className="naopagou">
+                    atrasado
+            </div>
+        )
+    }
+
 
     renderTela(){
         return( <div className="form">
@@ -66,6 +82,10 @@ export default class Query extends Component {
                             <i className="fa fa-pen">Buscar</i>
                         </button>
                     </div>
+                </div>
+                <div >
+                    {this.state.client.pay? this.pagou(): this.naopagou()}
+
                 </div>
             </div>
             )
@@ -101,7 +121,7 @@ export default class Query extends Component {
                     <td>{client.name}</td>
                     <td>{client.numero}</td>
                     <td>{client.datePagament}</td>
-                    <td>{(client.lastMouthPaid)+1}</td>
+                    <td>{client.lastMouthPaid}</td>
                     <td>{client.pay? "pagamento em dia":"atrasado"}</td>
                 </tr>
             )

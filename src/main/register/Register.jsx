@@ -51,7 +51,7 @@ export default class Register extends Component {
                         <th>Numero</th>
                         <th>Data de Pagamento</th>
                         <th>Ultimo mês pago</th>
-                        <th>situação de pagamento</th>
+                        <th>Mes de vencimento</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -62,6 +62,22 @@ export default class Register extends Component {
             )
     }
 
+    pagou(){
+        return(
+            <div className="pagou">
+                    pagamento em dia
+            </div>
+        )
+    } 
+
+    naopagou(){
+        return(
+            <div className="naopagou">
+                    atrasado
+            </div>
+        )
+    }
+
     renderRows(){
         const client ={...this.stateConsultado.client}
             return(
@@ -70,8 +86,8 @@ export default class Register extends Component {
                     <td>{client.name}</td>
                     <td>{client.numero}</td>
                     <td>{client.datePagament}</td>
-                    <td>{(client.lastMouthPaid)+1}</td>
-                    <td>{client.pay? "pagamento em dia":"atrasado"}</td>
+                    <td>{client.lastMouthPaid +1}</td>
+                    <td>{client.pay? (this.pagou()) :(this.naopagou())}</td>
                 </tr>
             )
     }
@@ -84,9 +100,20 @@ export default class Register extends Component {
                 <hr />
                 <div className="row">
                     <div className="col-12 d-flex justify-content-end">
+
+                    <button className="btn btn-warning"
+                        onClick={e => this.pay(e)}>
+                        <i className="fa fa-pen">Pagamento do mês</i>
+                    </button>
+
                     <button className="btn btn-success"
                             onClick={e => this.getClient(this.state.client.id)}>{/** acho que se coloca só um e resolver testa */}
                             <i className="fa fa-pen">Buscar</i>
+                        </button>
+
+                        <button className="btn btn-primary"
+                            onClick={e => this.reactivate(this.state.client.id)}>
+                            <i className="fa fa-pen">Reativar</i>
                         </button>
 
                         <button className="btn btn-danger"
@@ -106,7 +133,7 @@ export default class Register extends Component {
     }
 
     clear() {
-        this.setState({ client: initialState.client })
+        this.setState({ client: this.state.client })
     }
 
     save() {//ver se ta certo
@@ -121,8 +148,16 @@ export default class Register extends Component {
 
     remove(event) {
         const client = { ...this.stateConsultado.client }
-        console.log(client.id)
         axios.delete(`${baseUrl}/${client.id}`).then(resp => {
+            this.clear()
+        })
+    }
+
+    reactivate(event){
+        const client = { ...this.stateConsultado.client }
+        const method = 'put'
+        const url = (`${baseUrl}/subscriptionReactivation`)
+        axios[method](url, client).then(resp => {
             this.clear()
         })
     }
@@ -130,7 +165,6 @@ export default class Register extends Component {
     pay(event) {//ver se ta certo
         
         const client = { ...this.stateConsultado.client }
-        console.log(client.id)
         const method = client.id ? 'put' : 'post'
         const url = client.id ? `${baseUrl}/paymentmonth` : `${baseUrl}/paymentmonth`
         axios[method](url, { "id": client.id})
@@ -173,10 +207,6 @@ export default class Register extends Component {
                         <i className="fa fa-pen">Editar ou Salvar</i>
                     </button>
 
-                    <button className="btn btn-warning"
-                        onClick={e => this.pay(e)}>
-                        <i className="fa fa-pen">Pagamento do mês</i>
-                    </button>
 
                 </div>
             </div>

@@ -1,3 +1,14 @@
 .btn{
     width: 100px;
 }
+
+.pagou{
+    background-color: green;
+    padding: 10px;
+}
+
+.naopagou{
+    background-color: red;
+    margin:5 px ;
+    padding: 10px;
+}
