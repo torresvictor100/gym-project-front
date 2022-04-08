@@ -82,7 +82,7 @@ export default class Register extends Component {
         const client ={...this.stateConsultado.client}
             return(
                 <tr key={client.id}>
-                    <td>{client.id}</td>
+                    <td>{client.id }</td>
                     <td>{client.name}</td>
                     <td>{client.numero}</td>
                     <td>{client.datePagament}</td>
@@ -143,23 +143,35 @@ export default class Register extends Component {
         axios[method](url, client)
             .then(resp => {
                 this.setState({ client: initialState.client})
+                
+            }).then( resp => {
+                alert("Salvar ou Atualizar com Sucesso")
             })
     }
 
     remove(event) {
         const client = { ...this.stateConsultado.client }
         axios.delete(`${baseUrl}/${client.id}`).then(resp => {
-            this.clear()
+            this.setState({ client: initialState.client })
+        }).then( resp => {
+            alert("Apagado com sucesso")
+        }).then( resp => {
+            this.stateConsultado = { ...initialState }
         })
     }
 
     reactivate(event){
         const client = { ...this.stateConsultado.client }
-        const method = 'put'
-        const url = (`${baseUrl}/subscriptionReactivation`)
-        axios[method](url, client).then(resp => {
-            this.clear()
-        })
+        const method = client.id ? 'put' : 'post'
+        const url = client.id ? `${baseUrl}/subscriptionReactivation` : `${baseUrl}/subscriptionReactivation`
+        axios[method](url, { "id": client.id})
+            .then(resp => {
+                this.setState({ client: initialState.client })
+            }).then( resp => {
+                alert("Tudo Ok Reativação realizado com sucesso")
+            }).then( resp => {
+                this.stateConsultado = { ...initialState }
+            })
     }
 
     pay(event) {//ver se ta certo
@@ -170,6 +182,10 @@ export default class Register extends Component {
         axios[method](url, { "id": client.id})
             .then(resp => {
                 this.setState({ client: initialState.client })
+            }).then( resp => {
+                alert("Tudo Ok pagamento realizado com sucesso")
+            }).then( resp => {
+                this.stateConsultado = { ...initialState }
             })
     }
 
@@ -183,18 +199,20 @@ export default class Register extends Component {
                             value={this.state.client.id} onChange={e => this.updateField(e)}
                             placeholder="Digite o id..." />
                     </div>
-                    <div className="col-12 col-md-6">
-                        <label>Nome</label>
-                        <input type="text" className="form-control" name="name"
-                            value={this.state.client.name} onChange={e => this.updateField(e)}
-                            placeholder="Digite o nome..." />
-                    </div>
+
                     <div className="col-12 col-md-6">
                         <label>Numero</label>
                         <input type="text" className="form-control" name="numero"
                             value={this.state.client.numero} onChange={e => this.updateField(e)}
                             placeholder="Digite o numero..." />
                     </div>
+                    <div className="col-12 col-md-6">
+                        <label>Nome</label>
+                        <input type="text" className="form-control" name="name"
+                            value={this.state.client.name} onChange={e => this.updateField(e)}
+                            placeholder="Digite o nome..." />
+                    </div>
+                    
                     <div className="col-12 col-md-6">
                         <label>data de Pagamento</label>
                         <input type="text" className="form-control" name="datePagament"
