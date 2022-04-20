@@ -7,6 +7,9 @@ export default props =>
             <Link to="/">
                 <i className="fa fa-home">Início</i>
             </Link>
+            <Link to="/login">
+                <i class="fa fa-money-bill-1">Login</i>
+            </Link>
             <Link to="/query">
                 <i class="fa fa-money-bill-1">Consulta Aluno</i>
             </Link>

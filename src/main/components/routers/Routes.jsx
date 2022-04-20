@@ -5,6 +5,7 @@ import Home from "../../home/Home";
 import Query from "../../query/Query";
 import Register from "../../register/Register";
 import AllRegister from "../../register/AllRegister";
+import Login from "../../login/Login";
 
 
 export default props =>
@@ -13,5 +14,6 @@ export default props =>
         <Route path="/register" element={<Register />} />
         <Route path="/query" element={<Query />} />
         <Route path="/allregister" element={<AllRegister />} />
+        <Route path="/login" element={<Login />} />
         <Route path="*" element={<Home />} />
     </Routes>

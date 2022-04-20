@@ -19,12 +19,15 @@ const initialState = {
             pay:'' }
 }
 
-const idconsultado = 0
+
+
+document.cookie = "username=John Doe";
 
 
 export default class Query extends Component {
 
     state = { ...initialState }
+
 
     idconsultado = idconsultado
 
