@@ -131,7 +131,6 @@ export default class Query extends Component {
     render() {
         return (
             <Main {...headerProps}>
-            {console.log({...initialState})}
             {this.renderTela()}
             {this.renderUsuario()}
             </Main>

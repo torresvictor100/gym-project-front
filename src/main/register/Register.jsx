@@ -53,7 +53,6 @@ export default class Register extends Component {
 
     renderUsuario(){
         return(
-            
         <table className="table mt-4">
                 <thead>
                     <tr>
@@ -194,7 +193,7 @@ export default class Register extends Component {
             })
     }
 
-    pay(event) {//ver se ta certo
+    pay(event) {
         
         const client = { ...this.stateConsultado.client }
         const method = client.id ? 'put' : 'post'

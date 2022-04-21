@@ -4,8 +4,8 @@ import axios from 'axios'
 import Main from "../components/template/Main";
 
 
-const baseUrl = 'http://localhost:8080/login'
 
+const baseUrl = 'http://localhost:8080/login'
 
 const headerProps = {
     valor: 'Login',
@@ -16,18 +16,22 @@ const initialState = {
     token: ''
 }
 
-
-
 export default class Login extends Component {
+
+    refash(){
+        window.location.reload()
+    }
+
 
     state = { ...initialState }
 
-
-    criarCooker(token){
+    criarCooker(token) {
         const name = "authorization"
         const validade = ''
         const local = '/'
         document.cookie = name + "=" + (token || "") + validade + ";" + local;
+        window.location.reload();
+
     }
 
     clear() {
@@ -38,15 +42,14 @@ export default class Login extends Component {
         const client = this.state.client
         const url = baseUrl
 
-        
+
         axios.post(url, client).then((resp) => {
             const token = resp.headers.authorization
             this.criarCooker(token)
 
         }).then(resp => {
             this.setState({ client: initialState.client })
-        })
-
+        }).then(() => {alert("Login efetuado")})
 
     }
 
@@ -97,6 +100,7 @@ export default class Login extends Component {
     }
     render() {
         return (
+            
             <Main {...headerProps}>
                 {this.renderLogin()}
             </Main>
