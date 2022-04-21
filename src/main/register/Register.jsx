@@ -10,6 +10,8 @@ const headerProps = {
 
 const baseUrl = 'http://localhost:8080/client'
 
+const dadoscookie = document.cookie.split(';')
+
 const initialState = {
     client: {
         id: 0,
@@ -24,11 +26,20 @@ const initialState = {
 
 export default class Register extends Component {
 
+    valoresCookers = {...dadoscookie}
     state = { ...initialState }
     stateConsultado = { ...initialState }
 
+    GetToken(){
+        let decodedCookie = this.valoresCookers;
+        const CookieText = JSON.stringify(decodedCookie)
+        const arrumandoTokenPalavrasInicias = CookieText.substring(20)
+        const arrumandoTokenPalavrasFinais = arrumandoTokenPalavrasInicias.slice(0, -2)
+        console.log(arrumandoTokenPalavrasFinais)
+        return arrumandoTokenPalavrasFinais
+    }
+
     getClient() {
-        
         const client = this.state.client
 
         this.stateConsultado = this.state
@@ -136,11 +147,14 @@ export default class Register extends Component {
         this.setState({ client: this.state.client })
     }
 
-    save() {//ver se ta certo
+    save() {
         const client = this.state.client
         const method = client.id ? 'put' : 'post'
         const url = client.id ? `${baseUrl}/${client.id}` : baseUrl
-        axios[method](url, client)
+        axios[method](url,client,{ 
+            headers: { 
+            'Authorization': `${this.GetToken()}`
+            }})
             .then(resp => {
                 this.setState({ client: initialState.client})
                 
@@ -151,7 +165,10 @@ export default class Register extends Component {
 
     remove(event) {
         const client = { ...this.stateConsultado.client }
-        axios.delete(`${baseUrl}/${client.id}`).then(resp => {
+        axios.delete(`${baseUrl}/${client.id}`,{ 
+            headers: { 
+            'Authorization': `${this.GetToken()}`
+            }}).then(resp => {
             this.setState({ client: initialState.client })
         }).then( resp => {
             alert("Apagado com sucesso")
@@ -164,7 +181,10 @@ export default class Register extends Component {
         const client = { ...this.stateConsultado.client }
         const method = client.id ? 'put' : 'post'
         const url = client.id ? `${baseUrl}/subscriptionReactivation` : `${baseUrl}/subscriptionReactivation`
-        axios[method](url, { "id": client.id})
+        axios[method](url, { "id": client.id},{ 
+            headers: { 
+            'Authorization': `${this.GetToken()}`
+            }})
             .then(resp => {
                 this.setState({ client: initialState.client })
             }).then( resp => {
@@ -179,7 +199,10 @@ export default class Register extends Component {
         const client = { ...this.stateConsultado.client }
         const method = client.id ? 'put' : 'post'
         const url = client.id ? `${baseUrl}/paymentmonth` : `${baseUrl}/paymentmonth`
-        axios[method](url, { "id": client.id})
+        axios[method](url, { "id": client.id},{ 
+            headers: { 
+            'Authorization': `${this.GetToken()}`
+            }})
             .then(resp => {
                 this.setState({ client: initialState.client })
             }).then( resp => {

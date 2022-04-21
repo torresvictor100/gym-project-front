@@ -3,7 +3,9 @@ import React, { Component } from "react";
 import axios from 'axios'
 import Main from "../components/template/Main";
 
+
 const baseUrl = 'http://localhost:8080/login'
+
 
 const headerProps = {
     valor: 'Login',
@@ -14,9 +16,19 @@ const initialState = {
     token: ''
 }
 
+
+
 export default class Login extends Component {
 
     state = { ...initialState }
+
+
+    criarCooker(token){
+        const name = "authorization"
+        const validade = ''
+        const local = '/'
+        document.cookie = name + "=" + (token || "") + validade + ";" + local;
+    }
 
     clear() {
         this.setState({ client: initialState.client })
@@ -26,11 +38,16 @@ export default class Login extends Component {
         const client = this.state.client
         const url = baseUrl
 
-        axios.post(url,client ).then((resp)=>{
-            console.log(resp.headers['authorization'])
+        
+        axios.post(url, client).then((resp) => {
+            const token = resp.headers.authorization
+            this.criarCooker(token)
+
         }).then(resp => {
             this.setState({ client: initialState.client })
         })
+
+
     }
 
     updateField(event) {
@@ -55,8 +72,8 @@ export default class Login extends Component {
                     <div className="col-12 col-md-4">
                         <div className="form-grup">
 
-                            <label>sigla</label>
-                            <input type="password" className="form-control" name="password"
+                            <label>Senha</label>
+                            <input type="text" className="form-control" name="password"
                                 value={this.state.client.password} onChange={e => this.updateField(e)}
                                 placeholder="Digite o password..." />
 
@@ -78,11 +95,11 @@ export default class Login extends Component {
             </div>
         )
     }
-    render(){
-        return(
-        <Main {...headerProps}>
-            {this.renderLogin()}
-        </Main>
+    render() {
+        return (
+            <Main {...headerProps}>
+                {this.renderLogin()}
+            </Main>
         )
     }
 
